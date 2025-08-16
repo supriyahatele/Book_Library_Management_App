@@ -3,13 +3,12 @@ const jwt = require('jsonwebtoken');
 const userModel = require('../models/userModel');
 
 const authMiddleware = async (req, res, next) => {
-    console.log('req.cookies',req.cookies)
   const token = req.cookies.token;
   if (!token) return res.status(401).json({ message: 'Not authorized, no token' });
 
   try {
     const decoded = jwt.verify(token, process.env.SECRETKEY);
-    console.log('decoded token',decoded)
+   
     req.user = await userModel.findById(decoded.id).select('-password');
     next();
   } catch (err) {
