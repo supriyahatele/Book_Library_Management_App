@@ -13,7 +13,9 @@ app.use(cookieParser());
 app.use(cors());
 
 let PORT =process.env.PORT||3005
-
+app.get("/get",(req,res)=>{
+    res.send({ msg:"app running "})
+})
 app.use("/api/auth",UserRouter)
 app.use("/api",bookRouter)
 app.use("/api",myBooksRouter)
